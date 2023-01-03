@@ -30,11 +30,14 @@ RSpec.describe FmRest::V1::Connection do
         extendee.base_connection(conn_settings) { dbl.foo }
       end
 
-      context "when passed :ssl and :proxy options" do
+      context "when passed :ssl, :proxy and :timeout options" do
         it "returns a Faraday::Connection with ssl and proxy options set" do
-          connection = extendee.base_connection(conn_settings.merge(ssl: { verify: false }, proxy: "https://foo.bar"))
+          connection = extendee.base_connection(
+            conn_settings.merge(ssl: { verify: false }, proxy: "https://foo.bar", timeout: 20)
+          )
           expect(connection.ssl.verify).to eq(false)
           expect(connection.proxy.uri.to_s).to eq("https://foo.bar")
+          expect(connection.options.timeout).to eq(20)
         end
       end
     end

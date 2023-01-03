@@ -117,6 +117,9 @@ module FmRest
         faraday_options = (faraday_options || {}).dup
         faraday_options[:ssl] = settings.ssl if settings.ssl?
         faraday_options[:proxy] = settings.proxy if settings.proxy?
+        if settings.timeout?
+          faraday_options[:request] = (faraday_options[:request] || {}).merge(timeout: settings.timeout)
+        end
 
         database = V1.url_encode(settings.database!)
 

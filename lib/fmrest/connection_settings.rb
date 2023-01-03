@@ -30,6 +30,7 @@ module FmRest
       date_format
       timestamp_format
       time_format
+      timeout
       timezone
       cognito_client_id
       cognito_pool_id
